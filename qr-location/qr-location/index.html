@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Location Logger</title>
+</head>
+<body>
+  <h1>Checking your location...</h1>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+        fetch("https://YOUR-BACKEND-URL/save-location", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            })
+        }).then(() => {
+            document.body.innerHTML = "<h2>Location shared. Thank you!</h2>";
+        }).catch(() => {
+            document.body.innerHTML = "<h2>Could not send location.</h2>";
+        });
+    });
+  </script>
+</body>
+</html>
